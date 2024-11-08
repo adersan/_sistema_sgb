@@ -1,0 +1,23 @@
+/* Estilos adicionais para complementar o Bootstrap */
+.sidebar {
+    min-height: 100vh;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar .nav-link {
+    color: #333;
+}
+
+.sidebar .nav-link:hover {
+    background-color: #eee;
+}
+.h400{
+    height: 400px;
+}
+.h100{
+    height: 30px;
+}
