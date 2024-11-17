@@ -1,36 +1,30 @@
 <?php
 include 'db_connection.php';
 
-$id = $_GET['id'];
-$sql = "SELECT * FROM usuario WHERE id_usuario=$id";
-$result = $conn->query($sql);
-$row = $result->fetch_assoc();
-?>
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $id_usuario = $_POST['usuario_id'];
+    $nome = $_POST['nome'];
+    $email = $_POST['email'];
+    $telefone = $_POST['telefone'];
+    $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
 
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Usuário</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/_css/style.css">
-</head>
-<body>
-    <div class="container mt-5">
-        <h2>Editar Usuário</h2>
-        <form action="atualizar_usuario.php" method="post">
-            <input type="hidden" name="id" value="<?php echo $row['id_usuario']; ?>">
-            <div class="form-group">
-                <label for="nome">Nome:</label>
-                <input type="text" class="form-control" id="nome" name="nome" value="<?php echo $row['nome']; ?>" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" class="form-control" id="email" name="email" value="<?php echo $row['email']; ?>" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Atualizar</button>
-        </form>
-    </div>
-</body>
-</html>
+    // Verificar se o usuário existe
+    $sql_check = "SELECT * FROM usuario WHERE id_usuario='$id_usuario'";
+    $result_check = $conn->query($sql_check);
+
+    if ($result_check->num_rows > 0) {
+        // Atualizar usuário
+        $sql_update = "UPDATE usuario SET nome='$nome', email='$email', telefone='$telefone', senha='$senha' WHERE id_usuario='$id_usuario'";
+        if ($conn->query($sql_update) === TRUE) {
+            echo "success";
+        } else {
+            echo "error: " . $conn->error;
+        }
+    } else {
+        echo "error: usuário não encontrado";
+    }
+
+    $conn->close();
+}
+
+?>

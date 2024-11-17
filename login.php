@@ -17,15 +17,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($senha, $row['senha'])) {
             // Usuário autenticado
             $_SESSION["nome"] = $row['nome'];
-            header("Location: index_logado.php"); // Redireciona para a página principal
+            header("Location: indexlogado.php"); // Redireciona para a página principal
             exit();
         } else {
             // Senha inválida
-            $login_error = "Usuário ou senha inválidos!";
+            echo "Usuário ou senha inválidos!";
         }
     } else {
         // Usuário não encontrado
-        $login_error = "Usuário ou senha inválidos!";
+        echo "Usuário não cadastrado!";
     }
 
     $sql->close();

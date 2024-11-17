@@ -1,0 +1,60 @@
+/* Estilos adicionais para complementar o Bootstrap */
+
+.row_nova{
+    display: flex;
+    align-items: stretch; 
+  }
+ 
+  
+  
+.sidebar {
+    min-height: 100vh;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar .nav-link {
+    color: #333;
+}
+
+.sidebar .nav-link:hover {
+    background-color: #eee;
+}
+.form-container {
+    display: none;
+}
+body {
+    padding-top: 56px;
+            /* Adicione esta linha para garantir que o footer fique no final da página */
+    min-height: 100vh; 
+    display: flex;
+    flex-direction: column;
+}
+.navbar {
+    background-color: #007bff; 
+        }
+        .navbar-brand, .nav-link {
+    color: #fff !important;
+        }
+.container h1 {
+    color: #007bff; 
+        }
+.content { /* Adicione um contêiner para o conteúdo */
+    flex: 1;
+        }
+#welcomeMessage {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #c3dbf3;
+    padding: 20px;
+    border: 1px solid #ced4da;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+        }
+

@@ -1,16 +1,26 @@
 <?php
-include 'db_connection.php';
+include_once 'db_connection.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nome = $_POST['nome'];
     $nacionalidade = $_POST['nacionalidade'];
 
-    $sql = "INSERT INTO autor (nome, nacionalidade) VALUES ('$nome', '$nacionalidade')";
+    // Verificar se o autor já existe
+    $sql = $conn->prepare("SELECT * FROM autor WHERE nome = ?");
+    $sql->bind_param("s", $nome);
+    $sql->execute();
+    $result = $sql->get_result();
 
-    if ($conn->query($sql) === TRUE) {
-        echo "Novo autor criado com sucesso";
+    if ($result->num_rows > 0) {
+        echo "duplicado";
     } else {
-        echo "Erro: " . $sql . "<br>" . $conn->error;
+        $sql = $conn->prepare("INSERT INTO autor (nome, nacionalidade) VALUES (?, ?)");
+        $sql->bind_param("ss", $nome, $nacionalidade);
+        if ($sql->execute() === TRUE) {
+            echo "success";
+        } else {
+            echo "error: " . $conn->error;
+        }
     }
 
     $conn->close();

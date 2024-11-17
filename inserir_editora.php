@@ -4,12 +4,20 @@ include 'db_connection.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nome = $_POST['nome'];
 
-    $sql = "INSERT INTO editora (nome) VALUES ('$nome')";
+    // Verificar se a editora já existe
+    $sql_check = "SELECT * FROM editora WHERE nome='$nome'";
+    $result_check = $conn->query($sql_check);
 
-    if ($conn->query($sql) === TRUE) {
-        echo "Nova editora criada com sucesso";
+    if ($result_check->num_rows > 0) {
+        echo "duplicado";
     } else {
-        echo "Erro: " . $sql . "<br>" . $conn->error;
+        $sql = "INSERT INTO editora (nome) VALUES ('$nome')";
+
+        if ($conn->query($sql) === TRUE) {
+            echo "success";
+        } else {
+            echo "error: " . $conn->error;
+        }
     }
 
     $conn->close();
