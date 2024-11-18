@@ -1189,7 +1189,7 @@ $(document).ready(function() {
     // Buscar sugestões de usuários
     $("#usuario1").keyup(function() {
         var nome = $(this).val();
-        if (nome.length >= 3) {
+        if (nome.length >= 1) {
             $.ajax({
                 url: "buscar_usuarios_emprestimo.php",
                 type: "POST",
@@ -1219,7 +1219,7 @@ $(document).ready(function() {
     // Buscar sugestões de livros
     $("#livros1").keyup(function() {
         var titulo = $(this).val();
-        if (titulo.length >= 3) {
+        if (titulo.length >= 0) {
             $.ajax({
                 url: "buscar_livros_emprestimo.php",
                 type: "POST",
@@ -1573,5 +1573,50 @@ $(document).ready(function() {
             }
         });
     }
+
+
+    // Gerar Relatório
+    $("#btn_gerar_relatorio").click(function() {
+        var tipo_relatorio = $("#tipo_relatorio").val();
+        console.log("Tipo de relatório selecionado: " + tipo_relatorio);
+
+        $.ajax({
+            url: "gerar_relatorio.php",
+            type: "POST",
+            data: { tipo_relatorio: tipo_relatorio },
+            success: function(data) {
+                console.log("Relatório gerado com sucesso.");
+                $("#resultados_relatorio").html(data);
+                $("#relatorio_acoes").show();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log("Erro ao gerar relatório: ", textStatus, errorThrown);
+                alert("Erro ao gerar relatório.");
+            }
+        });
+    });
+
+    // Limpar Relatório
+    $("#btn_limpar_relatorio").click(function() {
+        $("#resultados_relatorio").empty();
+        $("#relatorio_acoes").hide();
+        $("#tipo_relatorio").val("");
+    });
+
+    // Gerar PDF do Relatório
+    $("#btn_pdf_relatorio").click(function() {
+        var relatorioHTML = $("#resultados_relatorio").html();
+        console.log("Conteúdo HTML do relatório:", relatorioHTML);
+        
+        var form = $('<form method="POST" action="gerar_pdf.php" target="_blank"></form>');
+        form.append('<input type="hidden" name="relatorio" value="' + encodeURIComponent(relatorioHTML) + '">');
+        $('body').append(form);
+        form.submit();
+        form.remove();
+    });
 });
 
+    
+
+
+    

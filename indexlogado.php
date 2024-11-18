@@ -398,9 +398,25 @@ $nomeUsuario = $_SESSION["nome"];
                     <div id="resultados_busca_emprestimo1" class="mt-3"></div>
 
                     <form id="relatorios" class="form-container" style="display:none;">
-                            <h2>Relatórios</h2>
-                            <hr>
-                            <!-- Campos do formulário de relatórios -->
+                        <h2>Relatórios</h2>
+                        <hr>
+                        <div class="form-group">
+                            <label for="tipo_relatorio">Selecione o tipo de relatório:</label>
+                            <select class="form-control" id="tipo_relatorio" name="tipo_relatorio">
+                                <option value="emprestimos">Empréstimos</option>
+                                <option value="devolucoes">Devoluções</option>
+                                <option value="usuarios">Usuários</option>
+                                <option value="livros">Livros</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary" id="btn_gerar_relatorio">Gerar Relatório</button>
+                        </div>
+                        <div class="form-group" id="relatorio_acoes" style="display:none;">
+                            <button type="button" class="btn btn-secondary" id="btn_limpar_relatorio">Limpar Relatório</button>
+                            <button type="button" class="btn btn-secondary" id="btn_pdf_relatorio">Gerar PDF</button>
+                        </div>
+                        <div id="resultados_relatorio" class="mt-3"></div>
                     </form>
                 </div>
             </div>
@@ -422,5 +438,55 @@ $nomeUsuario = $_SESSION["nome"];
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="js/script.js"></script>
+    <!--<script>
+        $(document).ready(function() {
+            // Gerar Relatório
+            $("#btn_gerar_relatorio").click(function() {
+                var tipo_relatorio = $("#tipo_relatorio").val();
+                console.log("Tipo de relatório selecionado: " + tipo_relatorio);
+
+                $.ajax({
+                    url: "gerar_relatorio.php",
+                    type: "POST",
+                    data: { tipo_relatorio: tipo_relatorio },
+                    success: function(data) {
+                        console.log("Relatório gerado com sucesso.");
+                        $("#resultados_relatorio").html(data);
+                        $("#relatorio_acoes").show();
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log("Erro ao gerar relatório: ", textStatus, errorThrown);
+                        alert("Erro ao gerar relatório.");
+                    }
+                });
+            });
+
+            // Limpar Relatório
+            $("#btn_limpar_relatorio").click(function() {
+                $("#resultados_relatorio").empty();
+                $("#relatorio_acoes").hide();
+                $("#tipo_relatorio").val("");
+            });
+
+            // Gerar PDF do Relatório
+            $("#btn_pdf_relatorio").click(function() {
+                var relatorioHTML = $("#resultados_relatorio").html();
+                $.ajax({
+                    url: "gerar_pdf.php",
+                    type: "POST",
+                    data: { relatorio: relatorioHTML },
+                    success: function(data) {
+                        console.log("PDF gerado com sucesso.");
+                        window.open(data, '_blank');
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log("Erro ao gerar PDF: ", textStatus, errorThrown);
+                        alert("Erro ao gerar PDF.");
+                    }
+                });
+            });
+        });
+
+    </script>-->
 </body>
 </html>
