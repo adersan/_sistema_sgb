@@ -31,6 +31,5 @@
         <li>
             Giuseppe Oliveira Grassi - Mat.: 202408486057 - <a href="https://github.com/Gograss">Repositório github</a>
         </li>
-
-     </ol>
+    </ol>
 
